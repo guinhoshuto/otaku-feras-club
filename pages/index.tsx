@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import axios from 'axios'
 import Head from 'next/head'
 import Image from 'next/image'
 import Header from './components/Header'
@@ -28,3 +29,14 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getServerSideProps() {
+  const res = await axios.get('https://otaku.feras.club/api/contentful')
+  const arr = JSON.parse(JSON.stringify(res.data.posts))
+
+  return {
+    props: {
+      posts: arr
+    }
+  }
+}
